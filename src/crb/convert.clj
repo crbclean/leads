@@ -61,6 +61,7 @@
     parser))
 
 
+
 (let [file (File. "Alabama2.csv")
       fis (FileInputStream. file)
       isr (InputStreamReader. fis)

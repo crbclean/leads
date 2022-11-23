@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [tech.v3.dataset :as ds]
-   ;[tablecloth.api :as tc]
+   [tablecloth.api :as tc]
    )
   (:import  [tech.v3.datatype ObjectReader]
             [com.univocity.parsers.common AbstractParser AbstractWriter CommonSettings]
@@ -10,7 +10,7 @@
             [com.univocity.parsers.tsv
              TsvWriterSettings TsvWriter]
             [java.io Reader Closeable Writer InputStreamReader File InputStream FileInputStream]
-            [java.util List]
+            [java.util List Arrays]
             [java.lang AutoCloseable]))
 
 
@@ -30,41 +30,53 @@
     (throw (Exception. (format "'%s' is not a valid separator" item)))))
 
 
+(->character "r")
+
+\r 
+\1
+
+
 (defn make-parser []
   (let [settings (CsvParserSettings.)
         settings (doto settings
                    (.setMaxCharsPerColumn (long 50000))
+                  
                    (.setParseUnescapedQuotes false)
                    (.setParseUnescapedQuotesUntilDelimiter false)
-                   (.setNormalizeLineEndingsWithinQuotes false)
-                   (.detectFormatAutomatically 
+                   ;(.setNormalizeLineEndingsWithinQuotes true)
+                   #_(.detectFormatAutomatically 
                                     (into-array Character/TYPE
                                                 [(->character ",")]))
-                 ;(.setRecordEndsOnNewline false)
+                ; (.setRecordEndsOnNewline false)
                    )
         format (doto (.getFormat settings)
                  (.setLineSeparator "\n")
+                 (.setDelimiter ",")
+                 (.setQuote \")
+                 (.setQuoteEscape \\)
+                 (.setNormalizedNewline \*)
                 
                  )
         parser (CsvParser. settings)]
     parser))
 
 
-(let [file (File. "raw/Alabama/Alabama2.csv")
+(let [file (File. "Alabama2.csv")
       fis (FileInputStream. file)
       isr (InputStreamReader. fis)
       parser (make-parser)
-      r (.parseAll parser isr)
+      ;r (.parseAll parser isr "UTF-8")
+      r (.parseAll parser file "UTF-8")
       ]
+     (doall (map (fn [row] (println "ROW: " (Arrays/toString row))) r))
      (count r)
-  
-  )
+  ) 
 
 
 (def csv-data
   (ds/->dataset
    "Alabama2.csv"
-    ;"raw/Alabama/Alabama2.csv"
+   ; "raw/Alabama/Alabama.csv"
    ;"https://gist.githubusercontent.com/awb99/c52fb78036d03ebd9cd2dcae3883d200/raw/3530d77761a4feaffc087f5be1fa1938db09e5e0/data.csv"
   ; "data.csv"
    {:header-row? true
@@ -72,7 +84,7 @@
   ;  :disable-comment-skipping? true
     ;:max-chars-per-column 60000
    ; :separator ","
-   ; :csv-parser (make-parser)
+    :csv-parser (make-parser)
     }))
 
 
@@ -113,6 +125,7 @@ csv-data
               (not (str/blank? (get row "Industry"))))))))
 
 
+
 (-> csv-data
     ;(valid-data)
      (tc/head  49)   
@@ -126,7 +139,7 @@ csv-data
     (tc/group-by (fn [row]
                    (get row "Industry")))
     (tc/aggregate #(count (get % "Full name")))
-    ;(tc/order-by [:symbol :year])
+    ;(tc/order-by [:symbol :years)
     ;(tc/head 100)
     ;(tc/shape)
     (tc/print-dataset {:print-index-range 100}))

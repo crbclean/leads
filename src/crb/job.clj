@@ -240,6 +240,8 @@
 
   (doall (map process-csv-state states))
 
+    (doall (map process-csv-state (reverse states-big)))
+  
   ; out of memory: 
 ;  (process-csv-state "Illinois")
 ;  "California"

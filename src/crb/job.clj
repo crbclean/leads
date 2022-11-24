@@ -94,65 +94,69 @@
 ; clean rooms
 ; upholstery cleaning
 
+(defn drop-columns [ds-csv]
+  (tc/drop-columns
+   ds-csv
+   (in-cols ["Countries"
+             "Interests"
+             "Company Size"
+             "Company Founded"
+             "Company Location Country"
+             "Company Location Continent"
+             "Location"
+             "Location Country"
+             "Location Continent"
+             "Locality"
+             "Street Address"
+             "Region"
+             "LinkedIn Url"
+             "Middle Initial"
+             "Middle Name"
+             "Last Name"
+             "Birth Year"
+             "Birth Date"
+             "Gender"
+             "Company Location Address Line 2"
+             "Company Location Postal Code"
+             "Address Line 2"
+             "Postal Code"
+             "Location Geo"
+             "Inferred Salary"
+             "Years Experience"
+             "Summary"
+             "Skills"
+             "First Name"
+             "Facebook Url"
+             "Twitter Url"
+             "Job Summary"
+             "Company Linkedin Url"
+             "Company Facebook Url"
+             "Company Twitter Url"
+             "Company Location Region"
+             "Company Location Geo"
+             "Company Location Street Address"
+             "Twitter Username"
+             "Github Url"
+             "Github Username"
+             "Company Location Locality"
+             "Company Location Metro"
+             "Last Updated"
+             "Start Date"
+             "Linkedin Connections"
+             "Sub Role"
+             "Industry"])
+   :name))
+
 
 (defn print-ds [ds-csv]
   (let [[rows cols] (tc/shape ds-csv)]
-    (-> ds-csv
-        (tc/drop-columns  (in-cols ["Countries"
-                                    "Interests"
-                                    "Company Size"
-                                    "Company Founded"
-                                    "Company Location Country"
-                                    "Company Location Continent"
-                                    "Location"
-                                    "Location Country"
-                                    "Location Continent"
-                                    "Locality"
-                                    "Region"
-                                    "LinkedIn Url"
-                                    "Middle Initial"
-                                    "Middle Name"
-                                    "Last Name"
-                                    "Birth Year"
-                                    "Birth Date"
-                                    "Gender"
-                                    "Company Location Address Line 2"
-                                    "Company Location Postal Code"
-                                    "Address Line 2"
-                                    "Postal Code"
-                                    "Location Geo"
-                                    "Inferred Salary"
-                                    "Years Experience"
-                                    "Summary"
-                                    "Skills"
-                                    "First Name"
-                                    "Facebook Url"
-                                    "Twitter Url"
-                                    "Job Summary"
-                                    "Company Linkedin Url"
-                                    "Company Facebook Url"
-                                    "Company Twitter Url"
-                                    "Company Location Region"
-                                    "Company Location Geo"
-                                    "Company Location Street Address"
-                                    "Twitter Username"
-                                    "Github Url"
-                                    "Github Username"
-                                    "Company Location Locality"
-                                    "Company Location Metro"
-                                    "Last Updated"
-                                    "Start Date"
-                                    "Linkedin Connections"
-                                    "Sub Role"
-                                    "Industry"]) :name)
-        (tc/print-dataset {:print-index-range rows}))))
+    (tc/print-dataset ds-csv {:print-index-range rows})))
 
 
 (defn print-file-ds [ds-csv state]
   (let [t (with-out-str (print-ds ds-csv))]
     (spit (str "txt/" state ".txt") t)
-    (ds/write! ds-csv (str "csv/" state ".csv"))
-    ))
+    (ds/write! ds-csv (str "csv/" state ".csv"))))
 
 
 (defn load-csv-state [state]
@@ -163,9 +167,10 @@
   (println "processing: " state)
   (-> (load-csv-state state)
       (carpet-cleaning)
+      (drop-columns)
       (print-file-ds state)))
 
-(def states-big 
+(def states-big
   ["California"
    "NewYork"
    "Texas"
@@ -173,17 +178,16 @@
    "Illinois"
    "Pennsylvania"
    "Georgia"
-   "Ohio"
-                 ])
+   "Ohio"])
 
 (def states ["Alabama"
              "Alaska"
              "Arizona"
              "Arkansas"
-  
+
              "Colorado"
              "Connecticut"
-  
+
              "Indiana"
              "Iowa"
              "Kansas"
@@ -206,23 +210,22 @@
              "Utah"
              "NorthDakota"
              "Virginia"
-        
+
              "Minnesota"
              "Oklahoma"
-            
+
              "Missouri"
              "Montana"
              "RhodeIsland"
              "Oregon"
              "Mississippi"
              "Washington"
-            
+
              "WestVirginia"
              "Hawaii"
              "Idaho"
              "Wisconsin"
-             "Wyoming"
-             ])
+             "Wyoming"])
 
 
 
@@ -242,8 +245,8 @@
 
   (doall (map process-csv-state states))
 
-    (doall (map process-csv-state (reverse states-big)))
-  
+  (doall (map process-csv-state (reverse states-big)))
+
   ; out of memory: 
 ;  (process-csv-state "Illinois")
 ;  "California"

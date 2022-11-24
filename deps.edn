@@ -16,7 +16,8 @@
                         ;"--middleware" "[cider.nrepl/cider-middleware,refactor-nrepl.middleware/wrap-refactor]"
                       ]
           ;:jvm-opts ["-Xmx16G"] ;; or more
-          :jvm-opts ["-Xmx24G"] ;; or more
+          ;:jvm-opts ["-Xmx24G"] ;; or more
+          :jvm-opts ["-Xmx32G"] ;; or more
           }
 
   :run {:extra-paths ["cli"]

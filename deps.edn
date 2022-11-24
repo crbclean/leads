@@ -1,15 +1,24 @@
 {:paths ["src"]
  :deps {org.clojure/clojure    {:mvn/version "1.10.3"}
         org.clojure/core.async {:mvn/version "1.3.618"}
-        de.otto/nom {:mvn/version "0.3.0"} 
+        de.otto/nom {:mvn/version "0.3.0"}
         ;techascent/tech.ml.dataset {:mvn/version "6.096"}
         techascent/tech.ml.dataset {:mvn/version "6.103"}
-        scicloj/tablecloth {:mvn/version "6.103"}
-        }
- 
+        scicloj/tablecloth {:mvn/version "6.103"}}
+
  :aliases
- {
-   :run {:extra-paths ["cli"]
+ {:nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}
+                       cider/cider-nrepl {:mvn/version,"0.27.2"}
+                       cider/piggieback {:mvn/version "0.4.2"}}
+          :main-opts ["-m" "nrepl.cmdline"
+                      "-b" "0.0.0.0"
+                      "-p" "9100"
+                        ;"--middleware" "[cider.nrepl/cider-middleware,refactor-nrepl.middleware/wrap-refactor]"
+                      ]
+          :jvm-opts ["-Xmx16G"] ;; or more
+          }
+
+  :run {:extra-paths ["cli"]
         :exec-fn demo.env.cli/run
         :exec-args {:config "resources/ta-config.edn"}
         :jvm-opts ["-Xmx4G"] ;; or more

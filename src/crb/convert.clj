@@ -124,12 +124,6 @@
                 ])
 
 
-; |          column-0 |                     column-1 |                             column-2 |          column-3 |    column-4 |                                                column-5 | column-6 |                   column-7 |                                     column-8 |               column-9 |              column-10 |    column-11 |       column-12 |                           column-13 |   column-14 |           column-15 | column-16 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         column-17 |  column-18 |      column-19 |   column-20 |  column-21 |  column-22 |  column-23 | column-24 |                                     column-25 |                     column-26 |                      column-27 |         column-28 |   column-29 |        column-30 |  column-31 |       column-32 |                                                         column-33 |              column-34 |                   column-35 |                                       column-36 |                 column-37 |              column-38 |               column-39 |            column-40 |                                 column-41 |                       column-42 |                    column-43 |                column-44 |                  column-45 |    column-46 |  column-47 |                                                                                                                                                                                                                                                                                                                                                                column-48 |        column-49 |          column-50 |                  column-51 |      column-52 |   column-53 |    column-54 |    column-55 |            column-56 |       column-57 |        column-58 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      column-59 |                     column-60 |                                                                                                                                              column-61 |
-(map-indexed (fn [i n] 
-               [(str "column-" i) n])
-             col-names)
-
-
 (defn load-csv [filename]
   (let [file (File. filename)
         ;fis (FileInputStream. file)
@@ -137,17 +131,18 @@
         parser (make-parser)
         ;r (.parseAll parser isr "UTF-8")
         r (.parseAll parser file "UTF-8")
-        ds-csv (tech.v3.dataset.io.string-row-parser/rows->dataset {:header-row? false
+        ds-csv (tech.v3.dataset.io.string-row-parser/rows->dataset {:header-row? true
                                                                     :skip-bad-rows? false}
                                                                    r)
         ]
      ;(doall (map (fn [row] (println "ROW: " (Arrays/toString row))) r))
      ;(count r)
      
-    (tc/rename-columns ds-csv (into {}
+    #_(tc/rename-columns ds-csv (into {}
                          (map-indexed (fn [i n]
                                         [(str "column-" i) n])
                                          col-names)))
+    ds-csv
   ))
 
 
@@ -178,57 +173,3 @@ csv-data
 (ds/head csv-data)
 ; comment
 )
-
-(def my-cols
-  ["Full name"
-   "Industry"
-   ;"Job title"
-   ])
-
-(defn cs [m]
-  (some #(= % m) my-cols))
-
-(cs "a")
-(cs "Full name")
-
-(defn valid-data [ds]
-  (-> ds
-      (tc/select-columns cs :name)
-      (tc/select-rows
-       (fn [row]
-         (and (not (str/blank? (get row "Full name")))
-              (not (str/blank? (get row "Industry"))))))))
-
-
-
-(-> ds-csv
-    ;(valid-data)
-     (tc/head  49)   
-    ;(tc/shape)
-    )
-
-
-(def ds-csv 
-    ;(load-csv "Alabama2.csv")
-    (load-csv "raw/Alabama/Alabama.csv"))
-
-
-(->  ds-csv
-    (valid-data)
-    (tc/group-by (fn [row]
-                   ;(get row "Industry")
-                   (get row "Industry 2")
-                   ))
-    (tc/aggregate #(count (get % "Full name")))
-    ;(tc/order-by [:symbol :years)
-    ;(tc/head 100)
-    ;(tc/shape)
-    (tc/print-dataset {:print-index-range 100}))
-
-Summary
-Inferred Salary |
-Years Experience
-
-Industry
-
-Sub Role

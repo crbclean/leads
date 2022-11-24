@@ -150,7 +150,9 @@
 
 (defn print-file-ds [ds-csv state]
   (let [t (with-out-str (print-ds ds-csv))]
-    (spit (str "txt/" state ".txt") t)))
+    (spit (str "txt/" state ".txt") t)
+    (ds/write! ds-csv (str "csv/" state ".csv"))
+    ))
 
 
 (defn load-csv-state [state]

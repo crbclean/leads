@@ -153,10 +153,36 @@
     (tc/print-dataset ds-csv {:print-index-range rows})))
 
 
+
+(defn last-email [emails-cs]
+  ;(println "last-email for: " emails-cs)
+  (-> (str/split emails-cs #",")
+      last))
+
+(defn single-email [col]
+  (map last-email col))
+
+
+(defn mailgun-file-ds [ds-csv state]
+  (let [ds-csv-with-emails
+        (tc/select-rows
+           ds-csv
+           (fn [row]
+             (not (str/blank? (get row "Emails")))))
+        col-emails (get ds-csv-with-emails "Emails")]
+  (-> ds-csv-with-emails
+      (tc/select-columns ["Full name" "Emails"])
+      (tc/add-column "Emails" (single-email col-emails))
+      (ds/write! (str "mailgun/" state ".csv") 
+                 {:headers? false}))))
+
+
 (defn print-file-ds [ds-csv state]
   (let [t (with-out-str (print-ds ds-csv))]
     (spit (str "txt/" state ".txt") t)
-    (ds/write! ds-csv (str "csv/" state ".csv"))))
+    (ds/write! ds-csv (str "csv/" state ".csv"))
+    (mailgun-file-ds ds-csv state)))
+
 
 
 (defn load-csv-state [state]

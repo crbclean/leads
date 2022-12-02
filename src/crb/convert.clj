@@ -3,6 +3,7 @@
    [clojure.string :as str]
    [tech.v3.dataset :as ds]
    [tech.v3.dataset.io.string-row-parser]
+   [tech.v3.dataset.io.csv :as tech-csv]
    [tablecloth.api :as tc]
    )
   (:import  [tech.v3.datatype ObjectReader]
@@ -137,13 +138,25 @@
         ]
      ;(doall (map (fn [row] (println "ROW: " (Arrays/toString row))) r))
      ;(count r)
-     
-    #_(tc/rename-columns ds-csv (into {}
-                         (map-indexed (fn [i n]
-                                        [(str "column-" i) n])
-                                         col-names)))
     ds-csv
   ))
+
+
+(defn load-csv-state [state]
+  (load-csv (str "raw/" state "/" state ".csv")))
+
+
+(defn load-csv-batched [filename]
+  (let [file (File. filename)
+        parser (make-parser)
+        r (.iterateRecords parser file "UTF-8")
+        s (tech-csv/csv->dataset-seq r)
+        ]
+    s))
+ 
+(load-csv-batched "Alabama2.csv")
+
+
 
 
 (comment 

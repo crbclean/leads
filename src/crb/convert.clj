@@ -154,7 +154,7 @@
         ]
     s))
  
-(load-csv-batched "Alabama2.csv")
+; (load-csv-batched "Alabama2.csv")
 
 
 

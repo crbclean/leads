@@ -50,6 +50,7 @@
              "Company Location Region"
              "Company Location Geo"
              "Company Location Street Address"
+             "Company Location Name"
              "Twitter Username"
              "Github Url"
              "Github Username"
@@ -98,4 +99,4 @@
     (spit (str "txt/" state ".txt") t)
     (ds/write! ds-cols-ok (str "csv/" state ".csv"))
     (mailgun-file-ds ds-csv state)
-    ds-csv))
+    ds-cols-ok))

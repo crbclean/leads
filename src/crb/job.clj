@@ -39,10 +39,15 @@
 
 
 (defn add-csv-state [r state]
-  (let [ds (process-csv-state state)] 
-    (if (nil? r) 
-      ds
-     (tc/concat ds r))))
+  (let [ds (process-csv-state state)
+        r (if (nil? r)
+            ds
+            (tc/concat ds r))] 
+     (println "ds states: " (tc/shape r))
+     (crb.export/export-ds-state r "all")
+    r
+    ))
+
 
 
 (defn combine-states [states]

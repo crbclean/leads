@@ -59,3 +59,14 @@
 ; professional cleaning
 ; clean rooms
 ; upholstery cleaning
+
+
+; email contains:
+; servpro     bbarr.servpro@gmail.com servpro9662 @aol.com
+; oxifresh  oxifresh.com
+
+; company name:
+; servpro of bath/brunswick
+; servpro of metairie and north kenner
+; servicemaster of baltimore
+; servicemaster of baltimore

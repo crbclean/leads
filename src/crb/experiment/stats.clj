@@ -1,9 +1,9 @@
-(ns crb.stats
+(ns crb.experiment.stats
   (:require
    [clojure.string :as str]
    [tech.v3.dataset :as ds]
    [tablecloth.api :as tc]
-   [crb.convert :refer [load-csv-state]]
+   [crb.csv.charred :refer [load-csv-state]]
    [crb.rowfilter]
    [crb.export]))
 

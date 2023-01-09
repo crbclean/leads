@@ -3,81 +3,53 @@
    [clojure.string :as str]
    [tech.v3.dataset :as ds]
    [tablecloth.api :as tc]
-   [crb.convert :refer [load-csv-state]] 
+   [crb.csv.charred :refer [load-csv-state-filtered]]
    [crb.rowfilter]
    [crb.export]
-   [crb.states]
-   ))
+   [crb.states]))
 
-
-
-(comment
-
-  (cs "a")
-  (cs "Full name")
-
-  (def ds-csv
-    ;(load-csv "Alabama2.csv")
-    (load-csv "raw/Alabama/Alabama.csv"))
-
-  (-> ds-csv
-    ;(valid-data)
-      (tc/head  49)
-    ;(tc/shape)
-      )
-
-  (crb.rowfilter/filter-valid-contact ds-csv)
-
-;
-  )
-
-(defn process-csv-state [state]
+(defn process-csv-state [row-filter-fn state]
   (println "processing: " state)
-  (-> (load-csv-state state)
-      (crb.rowfilter/carpet-cleaning)   
-      (crb.export/export-ds-state state)))
+  (-> (load-csv-state-filtered row-filter-fn state)
+      (crb.export/export-ds-state state)
+      ))
+
+(defn create-add-csv-state [row-filter-fn]
+  (fn [r state]
+    (let [ds (process-csv-state row-filter-fn state)
+          r (if (nil? r)
+              ds
+              (tc/concat ds r))]
+      (println "ds states: " (tc/shape r))
+      (crb.export/export-ds-state r "all")
+      r)))
 
 
-(defn add-csv-state [r state]
-  (let [ds (process-csv-state state)
-        r (if (nil? r)
-            ds
-            (tc/concat ds r))] 
-     (println "ds states: " (tc/shape r))
-     (crb.export/export-ds-state r "all")
-    r
-    ))
 
-
-
-(defn combine-states [states]
-  (let [ds-states (reduce add-csv-state nil states)]
+(defn combine-states [row-filter-fn states]
+  (let [ds-states (reduce (create-add-csv-state row-filter-fn) nil states)]
     (println "ds states: " (tc/shape ds-states))
-     (crb.export/export-ds-state ds-states "all")
-    ))
+    (crb.export/export-ds-state ds-states "all")))
 
 
 
 (comment
+ 
+  (process-csv-state crb.rowfilter/carpet-cleaning "Alabama")
+  (process-csv-state crb.rowfilter/carpet-cleaning "Georgia")
 
-  (-> (load-csv-state "Alabama")
-      (tc/shape))
-  ; [851429 62]
-
-  (process-csv-state "Alabama")
-  (process-csv-state "Georgia")
-  
-  (combine-states ["Alabama" "Georgia"])
-    (combine-states crb.states/states)
-
-  
-  (doall (map process-csv-state crb.states/states))
-
-  (doall (map process-csv-state (reverse crb.states/states-big)))
+  (doall (map (partial process-csv-state crb.rowfilter/carpet-cleaning) crb.states/states))
+  (doall (map (partial process-csv-state crb.rowfilter/carpet-cleaning) (reverse crb.states/states-big)))
 
   ; out of memory: 
-;  (process-csv-state "Illinois")
-;  "California"
+  ;  (process-csv-state "Illinois")
+  ;  "California"
+  
+  (combine-states crb.rowfilter/carpet-cleaning ["Alabama" "Georgia"])
+  (combine-states crb.rowfilter/carpet-cleaning crb.states/states)
+
+
+
 
 
 

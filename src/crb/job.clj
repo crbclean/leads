@@ -8,35 +8,60 @@
    [crb.export]
    [crb.states]))
 
-(defn process-csv-state [row-filter-fn state]
+(defn process-csv-state [dir row-filter-fn state]
   (println "processing: " state)
-  (-> (load-csv-state-filtered row-filter-fn state)
-      (crb.export/export-ds-state state)
-      ))
+  (try (-> (load-csv-state-filtered row-filter-fn state)
+           (crb.export/export-ds-state dir state))
+       (catch Exception ex-cause
+         (println "EXCEPTION ON STATE: " state "ex: " ex-cause)
+         nil)))
 
-(defn create-add-csv-state [row-filter-fn]
-  (fn [r state]
-    (let [ds (process-csv-state row-filter-fn state)
-          r (if (nil? r)
-              ds
-              (tc/concat ds r))]
-      (println "ds states: " (tc/shape r))
-      (crb.export/export-ds-state r "all")
-      r)))
+(defn create-add-csv-state [dir row-filter-fn]
+  (fn [ds-r state]
+    (let [ds (process-csv-state dir row-filter-fn state)
+          ds-r (if (nil? ds-r)
+                 ds
+                 (tc/concat ds ds-r))]
+      (println "ds-states-all shape: " (tc/shape ds-r))
+      (when ds-r
+        (crb.export/export-ds-state ds-r dir "all"))
+      ds-r)))
 
 
 
-(defn combine-states [row-filter-fn states]
-  (let [ds-states (reduce (create-add-csv-state row-filter-fn) nil states)]
+(defn combine-states [dir row-filter-fn states]
+  (let [ds-states (reduce (create-add-csv-state dir row-filter-fn) nil states)]
     (println "ds states: " (tc/shape ds-states))
-    (crb.export/export-ds-state ds-states "all")))
+    (crb.export/export-ds-state ds-states dir "all")))
 
 
 
 (comment
- 
-  (process-csv-state crb.rowfilter/carpet-cleaning "Alabama")
-  (process-csv-state crb.rowfilter/carpet-cleaning "Georgia")
+
+  (process-csv-state "export/carpet-cleaning/"
+                     crb.rowfilter/carpet-cleaning
+                     "Alabama2")
+
+  (process-csv-state "export/carpet-cleaning/"
+                     crb.rowfilter/carpet-cleaning
+                     "Alabama")
+
+  (process-csv-state "export/carpet-cleaning/"
+                     crb.rowfilter/carpet-cleaning
+                     "Maryland") ; tech.v3.dataset.Text
+
+
+  (process-csv-state "export/carpet-cleaning/"
+                     crb.rowfilter/carpet-cleaning
+                     "Massachusetts")
+  ; Massachusetts
+  ; Michigan
+  ; Ohio
+  ; California
+  ; Oklahoma
+  ; Execution error at tech.v3.dataset.io.column_parsers.PromotionalStringParser/addValue (column_parsers.clj:419).
+  ; Parse failure detected in promotional parser - Please file issue.
+
 
   (doall (map (partial process-csv-state crb.rowfilter/carpet-cleaning) crb.states/states))
   (doall (map (partial process-csv-state crb.rowfilter/carpet-cleaning) (reverse crb.states/states-big)))
@@ -44,9 +69,23 @@
   ; out of memory: 
   ;  (process-csv-state "Illinois")
   ;  "California"
-  
-  (combine-states crb.rowfilter/carpet-cleaning ["Alabama" "Georgia"])
-  (combine-states crb.rowfilter/carpet-cleaning crb.states/states)
+
+  (combine-states "export/carpet-cleaning/"
+                  crb.rowfilter/carpet-cleaning
+                  ["Alabama" "Georgia"])
+
+  (combine-states "export/carpet-cleaning/"
+                  crb.rowfilter/carpet-cleaning
+                  crb.states/states-all)
+
+  (combine-states "export/oxifresh/"
+                  crb.rowfilter/oxifresh
+                  crb.states/states-all)
+
+  (combine-states "export/servpro/"
+                  crb.rowfilter/servpro
+                  crb.states/states-all)
+
 
 
 

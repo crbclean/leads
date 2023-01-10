@@ -1,0 +1,7 @@
+_unnamed [2 12]:
+
+|    Full name | Job title | Industry 2 |                Emails | Mobile | Phone numbers |        Company Name | Company Industry | Company Website |                  Metro |     LinkedIn Username | Facebook Username |
+|--------------|-----------|------------|-----------------------|-------:|---------------|---------------------|------------------|-----------------|------------------------|-----------------------|-------------------|
+| nathan leier |     owner |            | servpro9970@midco.net |        |               | servpro of bismarck |                  |                 |                        | nathan-leier-5a81ba3a |                   |
+|   chad leier |     owner |            | chadleier@hotmail.com |        |               |    servpro of minot |                  |                 | bismarck, north dakota |   chad-leier-1989242a |                   |
+

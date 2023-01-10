@@ -42,7 +42,8 @@
       (tc/select-columns ["Full name" "Gender"]))
 
   (load-csv-state-filtered (fn [c] true) "Alabama")
-
+  
+  (load-csv-state-filtered (fn [c] true) "Maryland")
 ;  
   )
 

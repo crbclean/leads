@@ -236,3 +236,21 @@ Sub Role
 |      66 |                 pipeline |
 |      90 |        content_marketing |
 |      30 |          media_relations |
+
+# export
+
+note: california still is not included.
+
+
+CARPET CLEANING EXPERTISE:  4132
+SERV PRO:      1124 
+OXIFRESH:  32
+
+# mailing
+
+1. campaign@marketing.crbclean.com
+   this email will not be checked by us.
+2. unsubscribe link
+3. track valid deliveries
+4. track openings 
+5. track purchases.

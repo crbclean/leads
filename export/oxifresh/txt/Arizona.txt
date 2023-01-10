@@ -1,0 +1,9 @@
+_unnamed [4 12]:
+
+|       Full name |          Job title | Industry 2 |                                       Emails | Mobile | Phone numbers |                          Company Name |  Company Industry | Company Website |            Metro |        LinkedIn Username | Facebook Username |
+|-----------------|--------------------|------------|----------------------------------------------|--------|---------------|---------------------------------------|-------------------|-----------------|------------------|--------------------------|-------------------|
+|     david wedel |              owner |            | davidwedel2000@yahoo.com, david@oxifresh.com |        |               | oxi fresh of maricopa carpet cleaning |                   |                 | phoenix, arizona |      david-wedel-39b35b8 |                   |
+| natalie ehrlich |          president |            |                         natalie@oxifresh.com |        |               |                             oxi fresh | consumer services |    oxifresh.com | phoenix, arizona | natalie-ehrlich-b4987480 |                   |
+|      ken raiche |         technician |            |            kraiche@cox.net, ken@oxifresh.com |        |               |                             oxi fresh | consumer services |    oxifresh.com | phoenix, arizona |      ken-raiche-036a0912 |                   |
+|   todd sandberg | operations manager | operations |                            todd@oxifresh.com |        |               |            oxi fresh of southern utah |                   |                 | phoenix, arizona |   todd-sandberg-468a5972 |                   |
+

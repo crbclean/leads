@@ -1,0 +1,8 @@
+_unnamed [3 12]:
+
+|     Full name |                                         Job title | Industry 2 |               Emails |      Mobile | Phone numbers |              Company Name |  Company Industry | Company Website |                    Metro |       LinkedIn Username | Facebook Username |
+|---------------|---------------------------------------------------|------------|----------------------|-------------|---------------|---------------------------|-------------------|-----------------|--------------------------|-------------------------|-------------------|
+| jacob gooding |                                     route manager |            |   jacob@oxifresh.com |             |               |          oxi fresh kansas | consumer services |                 |    kansas city, missouri |  jacob-gooding-49ab369a |                   |
+| matthew davis |                           co owner and technician |            | matthew@oxifresh.com | 18166560785 |  +18166560785 |  fantastic floor cleaning |                   |                 |    kansas city, missouri | matthew-davis-493a23114 |                   |
+|    brian mack | owner - oxi fresh carpet cleaning of mid missouri |            |   brian@oxifresh.com |             |               | oxi fresh of mid missouri |                   |                 | jefferson city, missouri |     brian-mack-1916b67b |                   |
+

@@ -1,0 +1,6 @@
+_unnamed [1 12]:
+
+|        Full name |        Job title | Industry 2 |                                       Emails | Mobile | Phone numbers | Company Name | Company Industry | Company Website |              Metro |         LinkedIn Username | Facebook Username |
+|------------------|------------------|------------|----------------------------------------------|--------|---------------|--------------|------------------|-----------------|--------------------|---------------------------|-------------------|
+| robert barisonek | security manager |            | bobsupersonic@yahoo.com, robert@oxifresh.com |        |               |       amazon |         internet |      amazon.com | new york, new york | robert-barisonek-98110215 |                   |
+

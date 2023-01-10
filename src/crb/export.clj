@@ -8,7 +8,6 @@
   (fn [m]
     (some #(= % m) my-cols)))
 
-
 (defn drop-columns [ds-csv]
   (tc/drop-columns
    ds-csv
@@ -63,6 +62,19 @@
              "Industry"])
    :name))
 
+(def my-cols
+  ["Full name"
+   "Job title"
+   "Industry 2"
+   "Emails"
+   "Mobile"
+   "Phone numbers"
+   "Company Name"
+   "Company Industry"
+   "Company Website"
+   "Metro"
+   "LinkedIn Username"
+   "Facebook Username"])
 
 (defn print-ds [ds-csv]
   (let [[rows cols] (tc/shape ds-csv)]
@@ -79,7 +91,7 @@
   (map last-email col))
 
 
-(defn mailgun-file-ds [ds-csv state]
+(defn mailgun-file-ds [ds-csv filename]
   (let [ds-csv-with-emails
         (tc/select-rows
          ds-csv
@@ -89,14 +101,14 @@
     (-> ds-csv-with-emails
         (tc/select-columns ["Full name" "Emails"])
         (tc/add-column "Emails" (single-email col-emails))
-        (ds/write! (str "mailgun/" state ".csv")
-                   {:headers? false}))))
+        (ds/write! filename {:headers? false}))))
 
 
-(defn export-ds-state [ds-csv state]
-  (let [ds-cols-ok (drop-columns ds-csv)
+(defn export-ds-state [ds-csv dir state]
+  (let [;ds-cols-ok (drop-columns ds-csv)
+        ds-cols-ok (tc/select-columns ds-csv my-cols)
         t (with-out-str (print-ds ds-cols-ok))]
-    (spit (str "txt/" state ".txt") t)
-    (ds/write! ds-cols-ok (str "csv/" state ".csv"))
-    (mailgun-file-ds ds-csv state)
+    (spit (str dir "txt/" state ".txt") t)
+    (ds/write! ds-cols-ok (str dir "csv/" state ".csv"))
+    (mailgun-file-ds ds-csv (str dir "mailgun/" state ".csv"))
     ds-cols-ok))

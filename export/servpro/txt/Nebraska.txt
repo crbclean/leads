@@ -1,0 +1,7 @@
+_unnamed [2 12]:
+
+|     Full name |                Job title | Industry 2 |                                                                                                    Emails |      Mobile |              Phone numbers |               Company Name |    Company Industry |           Company Website |           Metro |       LinkedIn Username | Facebook Username |
+|---------------|--------------------------|------------|-----------------------------------------------------------------------------------------------------------|------------:|----------------------------|----------------------------|---------------------|---------------------------|-----------------|-------------------------|-------------------|
+| matt smidlein | marketing representative |  marketing |                                                                                    mattsmidlein@gmail.com | 14848684760 |               +14848684760 | servpro of omaha northwest | facilities services | servproomahanorthwest.com | omaha, nebraska | matt-smidlein-61b848115 |          smidlein |
+|    lathe toft |                    owner |            | lathet@cox-internet.com, lathet@concentric.net, lathet@rochester.rr.com, lathet@att.net, lathet@yahoo.com | 17122605750 | +17122605750, +17122628109 | servpro of omaha southwest |                     |                           | omaha, nebraska |     lathe-toft-06a2627a |            lathet |
+

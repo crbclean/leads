@@ -57,3 +57,6 @@
              "Idaho"
              "Wisconsin"
              "Wyoming"])
+
+(def states-all 
+  (concat states-big states))

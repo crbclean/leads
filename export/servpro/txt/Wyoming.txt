@@ -1,0 +1,7 @@
+_unnamed [2 12]:
+
+|    Full name | Job title | Industry 2 |              Emails |      Mobile | Phone numbers |      Company Name |  Company Industry |   Company Website |           Metro |     LinkedIn Username | Facebook Username |
+|--------------|-----------|------------|---------------------|------------:|---------------|-------------------|-------------------|-------------------|-----------------|-----------------------|-------------------|
+| miamie sleep | marketing |  marketing |                     | 13077970548 |  +13077970548 | servpro of casper | consumer services | servprocasper.com | casper, wyoming | miamie-sleep-b4b854b9 |      miamie.sleep |
+|   gale sleep |   manager |            | gasleep@hotmail.com |             |               | servpro of casper |                   |                   | casper, wyoming |   gale-sleep-43879520 |                   |
+

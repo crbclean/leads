@@ -5,7 +5,7 @@
         techascent/tech.ml.dataset {:mvn/version "6.103"}
         ;techascent/tech.ml.dataset {:mvn/version "7.000-beta-14"}
         scicloj/tablecloth {:mvn/version "6.103.1"}
-        com.cnuernber/charred {:mvn/version "1.018"} ; hack to get the latest charred
+        com.cnuernber/charred {:mvn/version "1.019"} ; hack to get the latest charred
         }
 
  :aliases

@@ -1,7 +1,7 @@
 set "$ApiKey=api:key-xxxxxxxxxx"
 set "$Url=https://api.mailgun.net/v3/crbclean.com/messages"
-set "$From='Mongo Marketing <info@crbclean.com>'"
-set "$To='internal@crbclean.com'"
+set "$From='David Araya <davida@crbclean.com>'"
+set "$To='test@marketing.crbclean.com'"
 set "$Subject='hello123'"
 set "$Template='test'"
 
